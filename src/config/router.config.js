@@ -1,5 +1,5 @@
 // eslint-disable-next-line
-import { UserLayout, BasicLayout, RouteView, BlankLayout, PageView } from '@/layouts'
+import { UserLayout, BasicLayout, RouteView, BlankLayout, PageView, IframeView } from '@/layouts'
 
 export const asyncRouterMap = [
 
@@ -161,10 +161,27 @@ export const asyncRouterMap = [
           }
         ]
       },
+      // 工作流
       {
-        path: '/wallboard',
-        meta: { title: '监控台', icon: 'layout',target:'_blank' },
-        name: 'admin',
+        path: '/workflow',
+        component: PageView,
+        meta: { title: '工作流', icon: 'layout' },
+        redirect: '/workflow/process-definition',
+        name: 'workflow',
+        children: [
+          {
+            path: '/workflow/process-definition',
+            name: 'ProcessDefinition',
+            component: ()=> import('@/views/workflow/ProcessDefinition'),
+            meta: { title: '流程管理', keepAlive: true }
+          }
+        ]
+      },
+      {
+        path: '/admin',
+        component: IframeView,
+        meta: { title: '监控台', icon: 'layout', link:'/wallboard' },
+        name: 'admin'
       }
     ]
   },
